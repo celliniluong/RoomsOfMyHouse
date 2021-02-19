@@ -15,7 +15,7 @@ var drawFunction;
 // offset from bottom of screen
 var gTextOffset = 40;
 
-// load all images into an array
+// Room images
 function preload() {
   images[0] = loadImage('assets/kitchen.png');
   images[1] = loadImage('assets/living.png');
@@ -32,10 +32,10 @@ function setup() {
   // Center our drawing objects
   imageMode(CENTER);
   textAlign(CENTER);
-  textSize(36);
+  textSize(24);
 
-  // set to one for startup
-  drawFunction = drawKitchen;
+  // Splash screen as first screen
+  drawFunction = drawSplash;
 }
 
 // Very simple, sets the background color and calls your state machine function
@@ -46,9 +46,8 @@ function draw() {
   drawFunction();
 }
 
-//========= TEMPLATE: modify these functions, INSIDE the function blocks only =========
 
-//-- drawOne() will draw the image at index 0 from the array
+//-- Kitchen Drawing
 drawKitchen = function() {
    image(images[0],width/2, height/2);
 
@@ -56,7 +55,7 @@ drawKitchen = function() {
    text("Kitchen", width/2, height - gTextOffset);
 }
 
-//-- drawTwo() will draw the image at index 1 from the array
+//-- Living Room Drawing
 drawLiving = function() {
    image(images[1],width/2, height/2);
 
@@ -64,7 +63,7 @@ drawLiving = function() {
    text("Living Room", width/2, height - gTextOffset);
 }
 
-//-- drawOne() will draw the image at index 2 from the array
+//-- Office Drawing
 drawOffice = function() {
    image(images[2],width/2, height/2);
 
@@ -72,7 +71,7 @@ drawOffice = function() {
    text("Office", width/2, height - gTextOffset);
 }
 
-//-- drawOne() will draw the image at index 3 from the array
+//-- Bedroom Drawing
 drawBedroom = function() {
    image(images[3],width/2, height/2);
 
@@ -80,7 +79,7 @@ drawBedroom = function() {
    text("Bedroom", width/2, height - gTextOffset);
 }
 
-//-- drawOne() will draw the image at index 4 from the array
+//-- Bathroom Drawing
 drawBath = function() {
    image(images[4],width/2, height/2);
 
@@ -88,7 +87,7 @@ drawBath = function() {
    text("Bathroom", width/2, height - gTextOffset);
 }
 
-//-- drawDining() will draw the image at index 4 from the array
+//-- Dining Drawing
 drawDining = function() {
    image(images[5],width/2, height/2);
 
@@ -96,10 +95,31 @@ drawDining = function() {
    text("Dining", width/2, height - gTextOffset);
 }
 
+// Splash Screen
+drawSplash = function() {
+   background(240, 210, 176);
+   fill(182, 124, 67);
+   textSize(60);
+   text("Cellini's Place", width/2, height/2);
 
-//========= TEMPLATE: add or change interface functions, as you like =========
+   textSize(36);
+   text("Press I for instructions", width/2, height/2 + 100);
+}
 
-// Change the drawFunction variable based on your interaction
+// Instruction Screen
+drawInstructions = function() {
+   background(67, 153, 116);
+   fill(255);
+   textSize(36);
+   text("Every room of this house leads to others", width/2, height/2 - 20);
+   
+   textSize(24);
+   text("Follow the instruction on each screen to navigate", width/2, height/2+ 40);
+   text("Start by pressing K to enter the kitchen", width/2, height/2 + 70);
+}
+
+
+// Keys for navigation between rooms
 function keyTyped() {
  
   if( drawFunction === drawKitchen ) {
@@ -150,4 +170,15 @@ function keyTyped() {
   		drawFunction = drawLiving;
   }  
 }
+  if( drawFunction === drawSplash ) {
+	if (key === "i") {
+	    drawFunction = drawInstructions;
+  }
 }
+  if( drawFunction === drawInstructions ) {
+  	if(key === 'k') {
+  		drawFunction = drawKitchen;
+  }  
+}  
+}
+
