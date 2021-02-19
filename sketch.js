@@ -1,35 +1,8 @@
 /***********************************************************************************
-	SimpleStateMachine - TEMPLATE
-	by Scott Kildall
+	Rooms of my house Assigment
+	by Cellini Luong
 
-	Template:
-
-	(1) Add your own PNG files in the assets folder. Make sure they match the names ***exactly*** of the existing PNGs.
-	(2) Add custom drawing code to drawSplash(), drawOne(), drawTwo(), drawThree(), drawFour(), drawFive()
-	(3) You can add your own interfaces - keys, mouse events, etc in the Interfaces section
-
-	Also start your localhost before running this, otherwise no PNGs will display
-
-------------------------------------------------------------------------------------
-	The way it works — you don't need to know this for the template use
-	* array of images gets loaded at startup
-	* drawFunction is a VARIABLE that points to a function varible name
-	* drawOne(), drawTwo(), etc. are set to be functions.
-	* the the keys 1-5 will change the drawFunction variable
-  * starts with drawSplash and waits for a mousePressed event
-  * adds a key, 's' to return to the splash screen
-
-------------------------------------------------------------------------------------
-	Notes:
-	- a more advanced state machine with use array-indexing variables for each of
-		images the draw functions, but this is just for illustrative purposes
-
-	- even more advanced will be to put the draw functions into an array, would
-		be helpful for randomizing, go to the next function, etc
-
-	- next step after that would be to put interfaces into an array that maps to
-		the functions
-
+	Take a tour of my house and navigate through simple states (rooms)
 
 ***********************************************************************************/
 
@@ -40,16 +13,16 @@ var images = [];
 var drawFunction;
 
 // offset from bottom of screen
-var gTextOffset = 20;
+var gTextOffset = 40;
 
 // load all images into an array
 function preload() {
-  images[0] = loadImage('assets/one.png');
-  images[1] = loadImage('assets/two.png');
-  images[2] = loadImage('assets/three.png');
-  images[3] = loadImage('assets/four.png');
-  images[4] = loadImage('assets/five.png');
-  images[5] = loadImage('assets/splash.png');
+  images[0] = loadImage('assets/kitchen.png');
+  images[1] = loadImage('assets/living.png');
+  images[2] = loadImage('assets/office.png');
+  images[3] = loadImage('assets/bedroom.png');
+  images[4] = loadImage('assets/bath.png');
+  images[5] = loadImage('assets/dining.png');
 }
 
 // Center drawing, drawFunction will be one for default
@@ -59,15 +32,15 @@ function setup() {
   // Center our drawing objects
   imageMode(CENTER);
   textAlign(CENTER);
-  textSize(24);
+  textSize(36);
 
   // set to one for startup
-  drawFunction = drawSplash;
+  drawFunction = drawKitchen;
 }
 
 // Very simple, sets the background color and calls your state machine function
 function draw() {
-  background(192);
+  background(182, 124, 67);
 
   // will call your state machine function
   drawFunction();
@@ -76,48 +49,51 @@ function draw() {
 //========= TEMPLATE: modify these functions, INSIDE the function blocks only =========
 
 //-- drawOne() will draw the image at index 0 from the array
-drawOne = function() {
+drawKitchen = function() {
    image(images[0],width/2, height/2);
 
-   fill(0,0,0);
-   text("State One", width/2, height - gTextOffset);
+   fill(255);
+   text("Kitchen", width/2, height - gTextOffset);
 }
 
 //-- drawTwo() will draw the image at index 1 from the array
-drawTwo = function() {
+drawLiving = function() {
    image(images[1],width/2, height/2);
 
-   fill(240,120,0);
-   text("State Two", width/2, height - gTextOffset);
+   fill(255);
+   text("Living Room", width/2, height - gTextOffset);
 }
 
 //-- drawOne() will draw the image at index 2 from the array
-drawThree = function() {
+drawOffice = function() {
    image(images[2],width/2, height/2);
 
-   fill(40,230,120);
-   text("State Three", width/2, height - gTextOffset);
+   fill(255);
+   text("Office", width/2, height - gTextOffset);
 }
 
 //-- drawOne() will draw the image at index 3 from the array
-drawFour = function() {
+drawBedroom = function() {
    image(images[3],width/2, height/2);
 
-   fill(255,255,178);
-   text("State Four", width/2, height - gTextOffset);
+   fill(255);
+   text("Bedroom", width/2, height - gTextOffset);
 }
 
 //-- drawOne() will draw the image at index 4 from the array
-drawFive = function() {
+drawBath = function() {
    image(images[4],width/2, height/2);
 
-   fill(230,50,50);
-   text("State Five", width/2, height - gTextOffset);
+   fill(255);
+   text("Bathroom", width/2, height - gTextOffset);
 }
 
-//-- drawSplash() will draw the image at index 4 from the array
-drawSplash = function() {
+//-- drawDining() will draw the image at index 4 from the array
+drawDining = function() {
    image(images[5],width/2, height/2);
+
+   fill(255);
+   text("Dining", width/2, height - gTextOffset);
 }
 
 
@@ -125,34 +101,53 @@ drawSplash = function() {
 
 // Change the drawFunction variable based on your interaction
 function keyTyped() {
-  if( drawFunction === drawSplash ) {
-    return;
-  }
-
-  if( key === '1' ) {
-  	drawFunction = drawOne;
-  }
-  else if( key === '2' ) {
-  	drawFunction = drawTwo;
-  }
-  else if( key === '3' ) {
-  	drawFunction = drawThree;
-  }
-  else if( key === '4' ) {
-  	drawFunction = drawFour;
-  }
-  else if( key === '5' ) {
-  	drawFunction = drawFive;
-  }
-
-  else if( key === 's' ) {
-    drawFunction = drawSplash;
+ 
+  if( drawFunction === drawKitchen ) {
+  	if(key === 'd') {
+  		drawFunction = drawDining;
+  	}
+  	else if(key === 'b'){
+  		drawFunction = drawBedroom;
   }
 }
-
-function mousePressed() {
-  // only change state if we are in splash screen
-  if( drawFunction === drawSplash ) {
-    drawFunction = drawOne;
+  if( drawFunction === drawLiving ) {
+  	if(key === 'r') {
+  		drawFunction = drawBath;
+  	}
+  	else if(key === 'o'){
+  		drawFunction = drawOffice;
   }
+}
+  if( drawFunction === drawOffice ) {
+  	if(key === 'l') {
+  		drawFunction = drawLiving;
+  	}
+  	else if(key === 'k'){
+  		drawFunction = drawKitchen;
+  }
+}
+  if( drawFunction === drawBedroom ) {
+  	if(key === 'd') {
+  		drawFunction = drawDining;
+  	}
+  	else if(key === 'r'){
+  		drawFunction = drawBath;
+  }
+}
+  if( drawFunction === drawBath ) {
+  	if(key === 'o') {
+  		drawFunction = drawOffice;
+  	}
+  	else if(key === 'b'){
+  		drawFunction = drawBedroom;
+  }
+}
+  if( drawFunction === drawDining ) {
+  	if(key === 'k') {
+  		drawFunction = drawKitchen;
+  	}
+  	else if(key === 'l'){
+  		drawFunction = drawLiving;
+  }  
+}
 }
